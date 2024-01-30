@@ -36,7 +36,9 @@ if __name__ == "__main__":
             workbook.save(sExcelFilePath)
 
         workbook = openpyxl.load_workbook(sExcelFilePath)
-        clSheet = workbook.create_sheet(clForms[sFormID]['name'])
+        existing_sheet = workbook[clForms[sFormID]['name']] if clForms[sFormID]['name'] in workbook.sheetnames else None
+        if existing_sheet is None:
+            clSheet = workbook.create_sheet(clForms[sFormID]['name'])
         clSheet = workbook[clForms[sFormID]['name']]
         clColumNames = list(clFormsResponses[0].keys())
 
